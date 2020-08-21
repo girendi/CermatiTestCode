@@ -1,25 +1,33 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:padding="16dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/img_photo"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:contentDescription="@string/Image"
-        app:civ_border_color="@color/gray"
-        app:civ_border_width="2dp" />
+    <data>
 
-    <TextView
-        android:id="@+id/txt_username"
-        android:layout_width="wrap_content"
+        <variable
+            name="user"
+            type="com.ams.cermatiandroidtest.model.User" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_toEndOf="@id/img_photo"
-        tools:text="@string/user_name"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:padding="8dp">
 
-</RelativeLayout>
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/img_photo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/Image"
+            android:imageUrl="@{user.avatar}"
+            app:civ_border_color="@color/gray"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_toEndOf="@id/img_photo"
+            android:text="@{user.name}"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</layout>

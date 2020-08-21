@@ -1,6 +1,7 @@
 package com.ams.cermatiandroidtest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,18 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ams.cermatiandroidtest.adapter.UserAdapter;
+import com.ams.cermatiandroidtest.databinding.ActivityMainBinding;
 import com.ams.cermatiandroidtest.model.User;
 import com.ams.cermatiandroidtest.viewModel.MainViewModel;
 
@@ -34,20 +31,22 @@ public class MainActivity extends AppCompatActivity {
 
     private MainViewModel mainViewModel;
 
+    private ActivityMainBinding mainBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        edtUsername = findViewById(R.id.editUser);
-        progressBar = findViewById(R.id.progressBar);
-        btnSearch = findViewById(R.id.btnSearch);
+        mainBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mainBinding.recyclerView.setHasFixedSize(true);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        edtUsername = mainBinding.editUser;
+        progressBar = mainBinding.progressBar;
+        btnSearch = mainBinding.btnSearch;
+
         adapter = new UserAdapter();
-        adapter.notifyDataSetChanged();
-        recyclerView.setAdapter(adapter);
+        mainBinding.recyclerView.setAdapter(adapter);
 
         mainViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MainViewModel.class);
 
@@ -64,12 +63,12 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.getUsers().observe(this, new Observer<ArrayList<User>>() {
             @Override
             public void onChanged(ArrayList<User> userItems) {
-                if(mainViewModel.getTotalCount() == 0){
-                    Toast.makeText(getApplicationContext(),"no result",
+                if (mainViewModel.getTotalCount() == 0) {
+                    Toast.makeText(getApplicationContext(), "no result",
                             Toast.LENGTH_LONG).show();
                     showLoading(false);
-                }else{
-                    Toast.makeText(getApplicationContext(),"get " + mainViewModel.getTotalCount() + " result",
+                } else {
+                    Toast.makeText(getApplicationContext(), "get " + mainViewModel.getTotalCount() + " result",
                             Toast.LENGTH_LONG).show();
                     if (userItems != null) {
                         adapter.setData(userItems);

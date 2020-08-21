@@ -105,7 +105,7 @@ public class MainViewModel extends ViewModel {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 try {
-                    String result = new String(responseString);
+                    String result = responseString;
                     JSONObject responseObject = new JSONObject(result);
                     JSONArray list = responseObject.getJSONArray("items");
 
@@ -142,7 +142,7 @@ public class MainViewModel extends ViewModel {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 try {
-                    String result = new String(responseString);
+                    String result = responseString;
                     JSONObject responseObject = new JSONObject(result);
                     JSONArray list = responseObject.getJSONArray("items");
 

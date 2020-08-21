@@ -1,6 +1,18 @@
 package com.ams.cermatiandroidtest.model;
 
-public class User {
+import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.view.View;
+
+import androidx.databinding.BindingAdapter;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class User implements Parcelable {
 
     private int id = 0;
     private String login;
@@ -14,6 +26,37 @@ public class User {
     private String repository;
     private String company;
     private String location;
+
+    public User(Parcel in) {
+        id = in.readInt();
+        login = in.readString();
+        avatar = in.readString();
+        url = in.readString();
+        followers_url = in.readString();
+        following_url = in.readString();
+        name = in.readString();
+        followers = in.readString();
+        following = in.readString();
+        repository = in.readString();
+        company = in.readString();
+        location = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    public User() {
+
+    }
 
     public int getId() {
         return id;
@@ -109,5 +152,34 @@ public class User {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(login);
+        dest.writeString(avatar);
+        dest.writeString(url);
+        dest.writeString(followers_url);
+        dest.writeString(following_url);
+        dest.writeString(name);
+        dest.writeString(followers);
+        dest.writeString(following);
+        dest.writeString(repository);
+        dest.writeString(company);
+        dest.writeString(location);
+    }
+
+    @BindingAdapter("android:imageUrl")
+    public static void loadImage(CircleImageView view, String imageUri){
+        Glide.with(view.getContext())
+                .load(imageUri)
+                .apply(new RequestOptions().override(350, 550))
+                .into(view);
     }
 }
