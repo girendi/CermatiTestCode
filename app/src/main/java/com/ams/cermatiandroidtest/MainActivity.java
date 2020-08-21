@@ -60,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        adapter.setOnItemClickCallback(new UserAdapter.OnItemClickCallback() {
+            @Override
+            public void onItemClicked(User data) {
+                showSelectedUser(data);
+            }
+        });
+
         mainViewModel.getUsers().observe(this, new Observer<ArrayList<User>>() {
             @Override
             public void onChanged(ArrayList<User> userItems) {
@@ -85,5 +92,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+    private void showSelectedUser(User user){
+        Toast.makeText(this, "You choose " + user.getName(), Toast.LENGTH_SHORT).show();
     }
 }

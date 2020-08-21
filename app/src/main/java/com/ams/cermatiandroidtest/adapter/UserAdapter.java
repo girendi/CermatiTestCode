@@ -1,6 +1,7 @@
 package com.ams.cermatiandroidtest.adapter;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
     private ArrayList<User> mData = new ArrayList<>();
+    private OnItemClickCallback onItemClickCallback;
 
     public void setData(ArrayList<User> items) {
         mData.clear();
@@ -32,10 +34,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserViewHolder userViewHolder, int position) {
+    public void onBindViewHolder(@NonNull final UserViewHolder userViewHolder, int position) {
         final User current = mData.get(position);
 
         userViewHolder.userItemBinding.setUser(current);
+
+        userViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickCallback.onItemClicked(mData.get(userViewHolder.getAdapterPosition()));
+            }
+        });
     }
 
     @Override
@@ -51,4 +60,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             userItemBinding = itemView;
         }
     }
+
+    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback;
+    }
+
+    public interface OnItemClickCallback {
+        void onItemClicked(User data);
+    }
+
 }
