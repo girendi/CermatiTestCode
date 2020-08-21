@@ -82,12 +82,13 @@ public class MainViewModel extends ViewModel {
 
                     listUsers.postValue(listItems);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.d("Exception", e.getMessage());
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("onFailure", error.getMessage());
             }
         });
     }
@@ -121,13 +122,13 @@ public class MainViewModel extends ViewModel {
 
                     listFollowers.postValue(listItems);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.d("Exception", e.getMessage());
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
+                Log.d("onFailure", throwable.getMessage());
             }
 
         });
@@ -158,13 +159,13 @@ public class MainViewModel extends ViewModel {
 
                     listFollowers.postValue(listItems);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.d("Exception", e.getMessage());
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
+                Log.d("onFailure", throwable.getMessage());
             }
 
         });
