@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText edtUsername;
     private ProgressBar progressBar;
     private Button btnSearch;
+    private String username;
 
     private MainViewModel mainViewModel;
 
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = edtUsername.getText().toString();
+                username = edtUsername.getText().toString();
                 if (TextUtils.isEmpty(username)) return;
                 showLoading(true);
                 mainViewModel.setUserSearch(username);
